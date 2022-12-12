@@ -138,6 +138,9 @@ def parseAltConfigParse(file, root_dir):
 			if line.startswith('/c/sys/mmgmt/net') and "addr" in line: # standalone configs
 				altip = line.split()[2].split("/")[0]
 
+			if line.startswith('/c/sys/mmgmt/dhcp') and "addr" in line: # VA configs
+				altip = line.split()[2].split("/")[0]
+
 			if line.startswith('/c/sys/mmgmt/addr'): # vadc configs
 				altip = line.split()[1].split("/")[0]
 
@@ -324,7 +327,7 @@ def parseAltConfigParse(file, root_dir):
 
 			############ Detect if DNS, NTP are routed through management interface ###########################################################
 
-			if line.startswith('/c/sys/mmgmt') and '/addr' not in line and '/net' not in line:
+			if line.startswith('/c/sys/mmgmt'):
 				if 'radius mgmt' in line:
 					radius_mgmt = True
 				if 'tacacs mgmt' in line:

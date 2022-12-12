@@ -11,6 +11,12 @@
 	Input: \Config\<<<Alteon config file>>>
 	Output: \Report\altconfig_report.csv
 
+# Version control
+
+V1.1 Fixed two bugs
+	- Alteon VA - fixed missing management IP
+	- Alteon VA - fixed wrong identification of routing management protocols through management/data port
+
 # How to run
 
 	1. Place Alteon config file or files under \Config\ path
