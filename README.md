@@ -17,6 +17,8 @@ V1.1 Fixed two bugs
 	- Alteon VA - fixed missing management IP
 	- Alteon VA - fixed wrong identification of routing management protocols through management/data port
 
+V1.2 Added redirect service handling
+
 # How to run
 
 	1. Place Alteon config file or files under \Config\ path
