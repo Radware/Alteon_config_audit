@@ -1,6 +1,7 @@
 import csv
 import os
 from tokenize import group
+import re
 
 if not os.path.exists('Config'):
 	os.makedirs('Config')
@@ -180,17 +181,14 @@ def parseAltConfigParse(file, root_dir):
 				
 
 
-
-					
 					vips_dic[line.split()[0].split("/")[3] + ' ' + line.split()[1].split("/")[0]]['Services'] = {}
 
 
 					# vips_dic[line.split()[0].split("/")[3] + ' ' + line.split()[1].split("/")[0]]['Services'][line.split()[2].split("/")[0]] = {}
 
-				elif line.split()[1].split("/")[1] == "service" and  "/group" in line: #for loop for service/s
-
+				elif line.split()[1].split("/")[1] == "service" and  "/group" in line and "/redirect" not in line: #case for servie with group
 					vip_service_attr = {}
-					for i in line.split("/")[4:]:
+					for i in line.split("/")[4:] :
 							if ' ' in i:
 								vip_service_attr[i.split()[0]] = ' '.join(map(str, i.split()[1:]))
 							
@@ -201,7 +199,30 @@ def parseAltConfigParse(file, root_dir):
 					vips_dic[line.split()[0].split("/")[3] + ' ' + line.split()[1].split("/")[0]]['Services'][line.split()[2].split("/")[0]] = vip_service_attr
 
 
-				elif line.split()[1].split("/")[1] == "service" and  "/appshape/" in line: #for loop for service/s
+			
+
+				elif line.split()[1].split("/")[1] == "service" and  "/redirect" in line: #case for the redirect service
+					
+					vip_service_attr = {}
+					# print(line.split()[2].split("/")[0]) # service port
+					vip_service_attr['service'] = line.split()[2].split("/")[0]
+					vip_service_attr['type'] = 'redirect'
+
+					pattern = r'redirect "(.*?)"'
+					redirect_path = re.search(pattern, line)
+					vip_service_attr['redirect path'] = redirect_path.group(1)
+	
+
+					if "/group" in line:
+						vip_service_attr['group'] = line.split('group ')[1].split('/')[0]
+					else:
+						vip_service_attr['group'] = 'N/A'
+					
+					vips_dic[line.split()[0].split("/")[3] + ' ' + line.split()[1].split("/")[0]]['Services'][line.split()[2].split("/")[0]] = vip_service_attr
+
+
+
+				elif line.split()[1].split("/")[1] == "service" and  "/appshape/" in line and "/redirect" not in line: #for loop for service/s
 					vips_dic[line.split()[0].split("/")[3] + ' ' + line.split()[1].split("/")[0]]['Services'][line.split()[2].split("/")[0]]['appshape'] = {}
 					vip_service_attr = {}
 					for i in line.split("/")[5:]:
@@ -215,7 +236,9 @@ def parseAltConfigParse(file, root_dir):
 					vips_dic[line.split()[0].split("/")[3] + ' ' + line.split()[1].split("/")[0]]['Services'][line.split()[2].split("/")[0].split("/")[0]]['appshape'] = vip_service_attr
 
 
-				elif line.split()[1].split("/")[1] == "service" and  "/pip/" in line: #for loop for service/s
+				elif line.split()[1].split("/")[1] == "service" and  "/pip/" in line and "/redirect" not in line: #for loop for service/s
+		
+
 					vips_dic[line.split()[0].split("/")[3] + ' ' + line.split()[1].split("/")[0]]['Services'][line.split()[2].split("/")[0]]['pip'] = {}
 					vip_service_attr = {}
 					for i in line.split("/")[5:]:
@@ -225,13 +248,13 @@ def parseAltConfigParse(file, root_dir):
 							else:
 								vip_service_attr[i.split()[0]] = True
 
-
+					
 					vips_dic[line.split()[0].split("/")[3] + ' ' + line.split()[1].split("/")[0]]['Services'][line.split()[2].split("/")[0]]['pip'] = vip_service_attr
 
 				else:
-						print(f'Else line if starts with "/c/slb/virt" and is "/service" not in line. Line is: {line}')
+						print(f'--->Else line if starts with "/c/slb/virt" and is "/service" not in line. Line is: {line}')
 
-
+			
 			############# Map PIPs to dictionary ##################################################################################
  
 
@@ -414,7 +437,6 @@ def parseAltConfigParse(file, root_dir):
 			with open(report_path + 'altconfig_report.csv', mode='a', newline="") as altconfig_report:
 				bdos_writer = csv.writer(altconfig_report, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 				bdos_writer.writerow([f'{althost}' , f'{altip}' , f'N/A' , f'N/A' , f'N/A' , f'N/A', f'NTP communication is not routed through management interface. It is recommended to use mangement interface for NTP communication', f'Low', f'/cfg/sys/mmgmt/ntp mgmt'])
-
 
 
 	
