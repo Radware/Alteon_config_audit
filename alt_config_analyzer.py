@@ -19,7 +19,7 @@ report_path = "./Report/"
 ###########################Create headers for the report ##################################################
 with open(report_path + 'altconfig_report.csv', mode='w', newline="") as altconfig_report:
 		bdos_writer = csv.writer(altconfig_report, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-		bdos_writer.writerow(['Alteon Name' , 'Alteon IP' ,	'Virt' , 'Group' , 'Real' , 'Filter', 'Recommendation', 'Priority', 'CLI Command'])
+		bdos_writer.writerow(['Alteon Name' , 'Alteon IP' ,	'Virt' , 'Group' , 'Real' , 'Filter', 'Recommendation', 'Category', 'Priority', 'CLI Command'])
 
 
 def VIP_to_VRRP(mode_vrrp,vips_dic,vrrp_dic,althost,altip): #Checks if VIP has corresponding VRRP
@@ -39,7 +39,7 @@ def VIP_to_VRRP(mode_vrrp,vips_dic,vrrp_dic,althost,altip): #Checks if VIP has c
 			if not vip_vrrp:
 				with open(report_path + 'altconfig_report.csv', mode='a', newline="") as altconfig_report:
 					bdos_writer = csv.writer(altconfig_report, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-					bdos_writer.writerow([f'{althost}' , f'{altip}' , f'{vip_key.split()[1]}' , f'N/A' , f'N/A' , f'N/A', f'Virt "{vip_key.split()[1]}" has no corresponding VRRP configured. It is recommended to configure VRRP for every Virt.' , f'High', f'N/A'])
+					bdos_writer.writerow([f'{althost}' , f'{altip}' , f'{vip_key.split()[1]}' , f'N/A' , f'N/A' , f'N/A', f'Virt "{vip_key.split()[1]}" has no corresponding VRRP configured. It is recommended to configure VRRP for every Virt.' ,'HA config', f'High', f'N/A'])
 
 
 def PIP_to_VRRP(mode_vrrp,pips_dic_glob,vrrp_dic,vips_dic,althost,altip): #Checks if VIP has corresponding VRRP
@@ -60,7 +60,7 @@ def PIP_to_VRRP(mode_vrrp,pips_dic_glob,vrrp_dic,vips_dic,althost,altip): #Check
 				# print(f'{althost}' , f'{altip}' , f'N/A' , f'N/A' , f'N/A' , f'N/A', f'Global PIP "{pip_ip}" has no corresponding VRRP configured. It is recommended to configure VRRP for every global PIP.' , f'High', f'N/A')
 				with open(report_path + 'altconfig_report.csv', mode='a', newline="") as altconfig_report:
 					bdos_writer = csv.writer(altconfig_report, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-					bdos_writer.writerow([f'{althost}' , f'{altip}' , f'N/A' , f'N/A' , f'N/A' , f'N/A', f'Global PIP "{pip_ip}" has no corresponding VRRP configured. It is recommended to configure VRRP for every global PIP(only applicable if Master and Standby share the same PIP IP)' , f'High', f'N/A'])
+					bdos_writer.writerow([f'{althost}' , f'{altip}' , f'N/A' , f'N/A' , f'N/A' , f'N/A', f'Global PIP "{pip_ip}" has no corresponding VRRP configured. It is recommended to configure VRRP for every global PIP(only applicable if Master and Standby share the same PIP IP)' ,'HA config' , f'High', f'N/A'])
 
 		for vip_key,vip_val in vips_dic.items():
 			# print(vip_val['vip'])
@@ -83,7 +83,7 @@ def PIP_to_VRRP(mode_vrrp,pips_dic_glob,vrrp_dic,vips_dic,althost,altip): #Check
 							# print(f'{althost}' , f'{altip}' , f'{vip_key}' , f'{virt_group}' , f'N/A' , f'N/A', f'Virt PIP "{vip_pip_ip}" has no corresponding VRRP configured. It is recommended to configure VRRP for every Virt PIP')
 							with open(report_path + 'altconfig_report.csv', mode='a', newline="") as altconfig_report:
 								bdos_writer = csv.writer(altconfig_report, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-								bdos_writer.writerow([f'{althost}' , f'{altip}' , f'{vip_key}' , f'{virt_group}' , f'N/A' , f'N/A', f'Virt PIP "{vip_pip_ip}" has no corresponding VRRP configured. It is recommended to configure VRRP for every Virt PIP' , f'High', f'N/A'])
+								bdos_writer.writerow([f'{althost}' , f'{altip}' , f'{vip_key}' , f'{virt_group}' , f'N/A' , f'N/A', f'Virt PIP "{vip_pip_ip}" has no corresponding VRRP configured. It is recommended to configure VRRP for every Virt PIP' ,'HA config', f'High', f'N/A'])
 
 
 def VRRP_track(vrrp_dic,althost,altip): #Check if each VRRP has Tracking enabled
@@ -92,7 +92,7 @@ def VRRP_track(vrrp_dic,althost,altip): #Check if each VRRP has Tracking enabled
 			# print(f'{althost}' , f'{altip}' , f'N/A' , f'N/A' , f'N/A' , f'N/A', f'VRRP "{vr_key}" has no VRRP Tracking configured. It is recommended to configure VRRP Tracking for every VRRP' , f'High', f'N/A')
 			with open(report_path + 'altconfig_report.csv', mode='a', newline="") as altconfig_report:
 				bdos_writer = csv.writer(altconfig_report, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-				bdos_writer.writerow([f'{althost}' , f'{altip}' , f'N/A' , f'N/A' , f'N/A' , f'N/A', f'VRRP "{vr_key}" has no VRRP Tracking configured. It is recommended to configure VRRP Tracking for every VRRP' , f'High', f'N/A'])
+				bdos_writer.writerow([f'{althost}' , f'{altip}' , f'N/A' , f'N/A' , f'N/A' , f'N/A', f'VRRP "{vr_key}" has no VRRP Tracking configured. It is recommended to configure VRRP Tracking for every VRRP' ,'Interface tracking', f'High', f'N/A'])
 
 
 def Config_to_one_line(file,root_dir):
@@ -292,7 +292,7 @@ def parseAltConfigParse(file, root_dir):
 			if line.startswith('/c/slb/sync/peer') and 'ena' not in line:
 				with open(report_path + 'altconfig_report.csv', mode='a', newline="") as altconfig_report:
 					bdos_writer = csv.writer(altconfig_report, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-					bdos_writer.writerow([f'{althost}' , f'{altip}' , f'N/A' , f'N/A' , f'N/A' , f'N/A', f'Config sync is disabled. It is recommended to configure configuration synchronization between the Alteon pair.' , f'High'])
+					bdos_writer.writerow([f'{althost}' , f'{altip}' , f'N/A' , f'N/A' , f'N/A' , f'N/A', f'Config sync is disabled. It is recommended to configure configuration synchronization between the Alteon pair.' , 'HA Config', f'High'])
 	
 			############# Check if non ICMP healthcheck is configured on the server group #############################
 			if "/c/slb/group" in line and "add " in line:
@@ -300,28 +300,28 @@ def parseAltConfigParse(file, root_dir):
 					# print(f'Group "{str(line.split()[1].split("/")[0])}" has healtcheck ICMP- line --> {line}')
 					with open(report_path + 'altconfig_report.csv', mode='a', newline="") as altconfig_report:
 						bdos_writer = csv.writer(altconfig_report, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-						bdos_writer.writerow([f'{althost}' , f'{altip}' , f'N/A' , str(line.split()[1].split("/")[0]) , f'N/A' , f'N/A', f'Group "{str(line.split()[1].split("/")[0])}" has a healtcheck type "ICMP". The recommended healthcheck types are TCP, Web Page, UDP' , f'Medium'])
+						bdos_writer.writerow([f'{althost}' , f'{altip}' , f'N/A' , str(line.split()[1].split("/")[0]) , f'N/A' , f'N/A', f'Group "{str(line.split()[1].split("/")[0])}" has a healtcheck type "ICMP". The recommended healthcheck types are TCP, Web Page, UDP' , 'Healthcheck', f'Medium'])
 
 			############ Check if NTP is set up ###############################################################################
 			if "/c/sys/ntp/" in line and "prisrv" not in line:
 				# print(line)
 				with open(report_path + 'altconfig_report.csv', mode='a', newline="") as altconfig_report:
 					bdos_writer = csv.writer(altconfig_report, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-					bdos_writer.writerow([f'{althost}' , f'{altip}' , f'N/A' , f'N/A' , f'N/A' , f'N/A', f'No NTP server is configured. It is recommended to set up NTP' , f'Medium'])
+					bdos_writer.writerow([f'{althost}' , f'{altip}' , f'N/A' , f'N/A' , f'N/A' , f'N/A', f'No NTP server is configured. It is recommended to set up NTP' ,'NTP', f'Medium'])
 
 			############ Check if Telnet management access is disabled #########################################################
 			if "/c/sys/access/" in line:
 				if "tnet ena" in line or "/telnet/on" in line:
 					with open(report_path + 'altconfig_report.csv', mode='a', newline="") as altconfig_report:
 						bdos_writer = csv.writer(altconfig_report, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-						bdos_writer.writerow([f'{althost}' , f'{altip}' , f'N/A' , f'N/A' , f'N/A' , f'N/A', f'Telnet management access is enabled. It is recommended to disable it' , f'High', f'/c/sys/access/tnet dis'])
+						bdos_writer.writerow([f'{althost}' , f'{altip}' , f'N/A' , f'N/A' , f'N/A' , f'N/A', f'Telnet management access is enabled. It is recommended to disable it' ,'Management Access Hardening', f'High', f'/c/sys/access/tnet dis'])
 
 			############ Check if HTTP management access is disabled ###########################################################
 			if "/c/sys/access/" in line:
 				if "http ena"in line or "/http/on" in line:
 					with open(report_path + 'altconfig_report.csv', mode='a', newline="") as altconfig_report:
 						bdos_writer = csv.writer(altconfig_report, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-						bdos_writer.writerow([f'{althost}' , f'{altip}' , f'N/A' , f'N/A' , f'N/A' , f'N/A', f'HTTP management access is enabled. It is recommended to disable it' , f'High', f'/c/sys/access/http dis'])
+						bdos_writer.writerow([f'{althost}' , f'{altip}' , f'N/A' , f'N/A' , f'N/A' , f'N/A', f'HTTP management access is enabled. It is recommended to disable it' ,'Management Access Hardening', f'High', f'/c/sys/access/http dis'])
 
 			############ Check if SSHv1 management access is disabled ###########################################################
 
@@ -329,7 +329,7 @@ def parseAltConfigParse(file, root_dir):
 				if "sshv1 ena" in line:
 					with open(report_path + 'altconfig_report.csv', mode='a', newline="") as altconfig_report:
 						bdos_writer = csv.writer(altconfig_report, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-						bdos_writer.writerow([f'{althost}' , f'{altip}' , f'N/A' , f'N/A' , f'N/A' , f'N/A', f'SSHv1 management access is enabled. It is recommended to disable it' , f'High', f'/c/sys/access/sshv1 dis'])
+						bdos_writer.writerow([f'{althost}' , f'{altip}' , f'N/A' , f'N/A' , f'N/A' , f'N/A', f'SSHv1 management access is enabled. It is recommended to disable it' ,'Management Access Hardening', f'High', f'/c/sys/access/sshv1 dis'])
 
 			############ Check if rtsmac (Return to Last Hop) is enabled under the VIP ###########################################################
 
@@ -337,7 +337,7 @@ def parseAltConfigParse(file, root_dir):
 				if 'rtsrcmac ena' not in line:
 					with open(report_path + 'altconfig_report.csv', mode='a', newline="") as altconfig_report:
 						bdos_writer = csv.writer(altconfig_report, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-						bdos_writer.writerow([f'{althost}' , f'{altip}' , f'{line.split()[1].split("/")[0]}' , f'N/A' , f'N/A' , f'N/A', f'"Return to Last Hop" is disabled. It is recommended to enable to prevent asymmetric routing back which may occur' , f'High', f'/cfg/slb/virt {line.split()[1].split("/")[0]}/rtsrcmac e'])
+						bdos_writer.writerow([f'{althost}' , f'{altip}' , f'{line.split()[1].split("/")[0]}' , f'N/A' , f'N/A' , f'N/A', f'"Return to Last Hop" is disabled. It is recommended to enable to prevent asymmetric routing back which may occur' ,'Return to Last Hop(rtsmac)', f'High', f'/cfg/slb/virt {line.split()[1].split("/")[0]}/rtsrcmac e'])
 
 
 			############ Check if VRID has "share dis" set ###########################################################
@@ -346,7 +346,7 @@ def parseAltConfigParse(file, root_dir):
 				if 'share dis' not in line:
 					with open(report_path + 'altconfig_report.csv', mode='a', newline="") as altconfig_report:
 						bdos_writer = csv.writer(altconfig_report, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-						bdos_writer.writerow([f'{althost}' , f'{altip}' , f'N/A' , f'N/A' , f'N/A' , f'N/A', f'"share dis" is not set for vr "{line.split()[1].split("/")[0]}". It is recommended to configure "share dis" so only prmary Alteon will process the the vrid matching traffic. In case the traffic destined to vrid enters the secondary Alteon, it will silently drop it.' , f'High', f'/c/l3/vrrp/vr {line.split()[1].split("/")[0]}/share dis'])
+						bdos_writer.writerow([f'{althost}' , f'{altip}' , f'N/A' , f'N/A' , f'N/A' , f'N/A', f'"share dis" is not set for vr "{line.split()[1].split("/")[0]}". It is recommended to configure "share dis" so only prmary Alteon will process the the vrid matching traffic. In case the traffic destined to vrid enters the secondary Alteon, it will silently drop it.' ,'HA config' f'High', f'/c/l3/vrrp/vr {line.split()[1].split("/")[0]}/share dis'])
 
 			############ Detect if DNS, NTP are routed through management interface ###########################################################
 
@@ -386,57 +386,57 @@ def parseAltConfigParse(file, root_dir):
 
 			with open(report_path + 'altconfig_report.csv', mode='a', newline="") as altconfig_report:
 				bdos_writer = csv.writer(altconfig_report, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-				bdos_writer.writerow([f'{althost}' , f'{altip}' , f'N/A' , f'N/A' , f'N/A' , f'N/A', f'SNMPv1/v2 read community is set to default "public". It is recommended to use SNMPv3 or set it to a unique value', f'High'])
+				bdos_writer.writerow([f'{althost}' , f'{altip}' , f'N/A' , f'N/A' , f'N/A' , f'N/A', f'SNMPv1/v2 read community is set to default "public". It is recommended to use SNMPv3 or set it to a unique value', 'Management Access Hardening',f'High'])
 
 		if not wcomm:
 
 			with open(report_path + 'altconfig_report.csv', mode='a', newline="") as altconfig_report:
 				bdos_writer = csv.writer(altconfig_report, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-				bdos_writer.writerow([f'{althost}' , f'{altip}' , f'N/A' , f'N/A' , f'N/A' , f'N/A', f'SNMPv1/v2 write community is set to default "private". It is recommended to use SNMPv3 or set it to a unique value', f'High'])
+				bdos_writer.writerow([f'{althost}' , f'{altip}' , f'N/A' , f'N/A' , f'N/A' , f'N/A', f'SNMPv1/v2 write community is set to default "private". It is recommended to use SNMPv3 or set it to a unique value','Management Access Hardening', f'High'])
 
 		################ Report if SNMPv1/v2 is enabled ###########################################################
 
 		if not snmpv1v2_dis:
 			with open(report_path + 'altconfig_report.csv', mode='a', newline="") as altconfig_report:
 				bdos_writer = csv.writer(altconfig_report, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-				bdos_writer.writerow([f'{althost}' , f'{altip}' , f'N/A' , f'N/A' , f'N/A' , f'N/A', f'SNMPv1v2 protocol is enabled. It is recommended to disable SNMPv1v2 and use SNMPv3 instead', f'Medium'])
+				bdos_writer.writerow([f'{althost}' , f'{altip}' , f'N/A' , f'N/A' , f'N/A' , f'N/A', f'SNMPv1v2 protocol is enabled. It is recommended to disable SNMPv1v2 and use SNMPv3 instead', 'Management Access Hardening', f'Medium'])
 
 		################ Report if protocols are not routed through management interface ###########################################################
 
 		if not radius_mgmt:
 			with open(report_path + 'altconfig_report.csv', mode='a', newline="") as altconfig_report:
 				bdos_writer = csv.writer(altconfig_report, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-				bdos_writer.writerow([f'{althost}' , f'{altip}' , f'N/A' , f'N/A' , f'N/A' , f'N/A', f'Radius protocol is not routed through management interface. If Radius is in use, it is recommended to use mangement interface for Radius communication', f'Low', f'/cfg/sys/mmgmt/radius mgmt'])
+				bdos_writer.writerow([f'{althost}' , f'{altip}' , f'N/A' , f'N/A' , f'N/A' , f'N/A', f'Radius protocol is not routed through management interface. If Radius is in use, it is recommended to use mangement interface for Radius communication', 'Routing', f'Low', f'/cfg/sys/mmgmt/radius mgmt'])
 
 		if not tacacs_mgmt:
 			with open(report_path + 'altconfig_report.csv', mode='a', newline="") as altconfig_report:
 				bdos_writer = csv.writer(altconfig_report, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-				bdos_writer.writerow([f'{althost}' , f'{altip}' , f'N/A' , f'N/A' , f'N/A' , f'N/A', f'Tacacs+ protocol is not routed through management interface. If Tacacs+ protocol is in use, it is recommended to use mangement interface for Tacacs+ communication', f'Low', f'/cfg/sys/mmgmt/tacacs mgmt'])
+				bdos_writer.writerow([f'{althost}' , f'{altip}' , f'N/A' , f'N/A' , f'N/A' , f'N/A', f'Tacacs+ protocol is not routed through management interface. If Tacacs+ protocol is in use, it is recommended to use mangement interface for Tacacs+ communication', 'Routing', f'Low', f'/cfg/sys/mmgmt/tacacs mgmt'])
 
 		if not syslog_mgmt:
 			with open(report_path + 'altconfig_report.csv', mode='a', newline="") as altconfig_report:
 				bdos_writer = csv.writer(altconfig_report, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-				bdos_writer.writerow([f'{althost}' , f'{altip}' , f'N/A' , f'N/A' , f'N/A' , f'N/A', f'Syslog protocol is not routed through management interface. It is recommended to use mangement interface for sending syslog.', f'Low', f'/cfg/sys/mmgmt/syslog mgmt'])
+				bdos_writer.writerow([f'{althost}' , f'{altip}' , f'N/A' , f'N/A' , f'N/A' , f'N/A', f'Syslog protocol is not routed through management interface. It is recommended to use mangement interface for sending syslog.', 'Routing', f'Low', f'/cfg/sys/mmgmt/syslog mgmt'])
 
 		if not snmp_mgmt:
 			with open(report_path + 'altconfig_report.csv', mode='a', newline="") as altconfig_report:
 				bdos_writer = csv.writer(altconfig_report, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-				bdos_writer.writerow([f'{althost}' , f'{altip}' , f'N/A' , f'N/A' , f'N/A' , f'N/A', f'SNMP Traps are not routed through management interface. It is recommended to use mangement interface for sending SNMP Traps.', f'Low', f'/cfg/sys/mmgmt/snmp mgmt'])
+				bdos_writer.writerow([f'{althost}' , f'{altip}' , f'N/A' , f'N/A' , f'N/A' , f'N/A', f'SNMP Traps are not routed through management interface. It is recommended to use mangement interface for sending SNMP Traps.', 'Routing', f'Low', f'/cfg/sys/mmgmt/snmp mgmt'])
 
 		if not ftp_tftp_scp_mgmt:
 			with open(report_path + 'altconfig_report.csv', mode='a', newline="") as altconfig_report:
 				bdos_writer = csv.writer(altconfig_report, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-				bdos_writer.writerow([f'{althost}' , f'{altip}' , f'N/A' , f'N/A' , f'N/A' , f'N/A', f'FTP, TFTP, SCP protocols are not routed through management interface. It is recommended to use mangement interface for FTP, TFTP, SCP communication', f'Low', f'/cfg/sys/mmgmt/tftp mgmt'])
+				bdos_writer.writerow([f'{althost}' , f'{altip}' , f'N/A' , f'N/A' , f'N/A' , f'N/A', f'FTP, TFTP, SCP protocols are not routed through management interface. It is recommended to use mangement interface for FTP, TFTP, SCP communication', 'Routing', f'Low', f'/cfg/sys/mmgmt/tftp mgmt'])
 
 		if not dns_mgmt:
 			with open(report_path + 'altconfig_report.csv', mode='a', newline="") as altconfig_report:
 				bdos_writer = csv.writer(altconfig_report, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-				bdos_writer.writerow([f'{althost}' , f'{altip}' , f'N/A' , f'N/A' , f'N/A' , f'N/A', f'DNS communication is not routed through management interface. It is recommended to use mangement interface for DNS communication', f'Low', f'/cfg/sys/mmgmt/dns mgmt'])
+				bdos_writer.writerow([f'{althost}' , f'{altip}' , f'N/A' , f'N/A' , f'N/A' , f'N/A', f'DNS communication is not routed through management interface. It is recommended to use mangement interface for DNS communication', 'Routing', f'Low', f'/cfg/sys/mmgmt/dns mgmt'])
 
 		if not ntp_mgmt:
 			with open(report_path + 'altconfig_report.csv', mode='a', newline="") as altconfig_report:
 				bdos_writer = csv.writer(altconfig_report, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-				bdos_writer.writerow([f'{althost}' , f'{altip}' , f'N/A' , f'N/A' , f'N/A' , f'N/A', f'NTP communication is not routed through management interface. It is recommended to use mangement interface for NTP communication', f'Low', f'/cfg/sys/mmgmt/ntp mgmt'])
+				bdos_writer.writerow([f'{althost}' , f'{altip}' , f'N/A' , f'N/A' , f'N/A' , f'N/A', f'NTP communication is not routed through management interface. It is recommended to use mangement interface for NTP communication', 'Routing', f'Low', f'/cfg/sys/mmgmt/ntp mgmt'])
 
 
 	

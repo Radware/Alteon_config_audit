@@ -19,13 +19,19 @@ V1.1 Fixed two bugs
 
 V1.2 Added redirect service handling
 
+V1.3 (7/6/2023)
+	- Added "Category" column to the report
+	
 # How to run
 
 	1. Place Alteon config file or files under \Config\ path
 	2. Run the script
 		python alt_config_analyzer.py
 	3. Get report under \Report\altconfig_report.csv path
-	
+
+
+
+
 # Config audit checks scope
 
 	1. Alert if healtcheck is ICMP or no healtcheck. Use TCP or HTTP page HC.
