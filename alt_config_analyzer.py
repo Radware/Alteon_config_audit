@@ -83,7 +83,7 @@ def PIP_to_VRRP(mode_vrrp,pips_dic_glob,vrrp_dic,vips_dic,althost,altip): #Check
 							# print(f'{althost}' , f'{altip}' , f'{vip_key}' , f'{virt_group}' , f'N/A' , f'N/A', f'Virt PIP "{vip_pip_ip}" has no corresponding VRRP configured. It is recommended to configure VRRP for every Virt PIP')
 							with open(report_path + 'altconfig_report.csv', mode='a', newline="") as altconfig_report:
 								bdos_writer = csv.writer(altconfig_report, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-								bdos_writer.writerow([f'{althost}' , f'{altip}' , f'{vip_key}' , f'{virt_group}' , f'N/A' , f'N/A', f'Virt PIP "{vip_pip_ip}" has no corresponding VRRP configured. It is recommended to configure VRRP for every Virt PIP(only applicable if Master and Standby share the same PIP IP)' ,'HA config', f'High', f'N/A'])
+								bdos_writer.writerow([f'{althost}' , f'{altip}' , f'{vip_key}' , f'{virt_group}' , f'N/A' , f'N/A', f'Virt PIP "{vip_pip_ip}" has no corresponding VRRP configured. It is recommended to configure VRRP for every Virt PIP(only applicable if Master and Standby share the same VIP PIP IP)' ,'HA config', f'High', f'N/A'])
 
 
 def VRRP_track(vrrp_dic,althost,altip): #Check if each VRRP has Tracking enabled
