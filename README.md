@@ -21,7 +21,13 @@ V1.2 Added redirect service handling
 
 V1.3 (7/6/2023)
 	- Added "Category" column to the report
-	
+
+V1.3.1 (8/3/2023)
+	- Added notes for VRRP recommendations for VIPs and PIPs
+		f'Virt "{vip_key.split()[1]}" has no corresponding VRRP configured. It is recommended to configure VRRP for every Virt. (Only applicable for Virts belonging to the same subnet of an Alteon Interface).'
+
+		f'Virt PIP "{vip_pip_ip}" has no corresponding VRRP configured. It is recommended to configure VRRP for every Virt PIP(only applicable if Master and Standby share the same PIP IP)'
+		
 # How to run
 
 	1. Place Alteon config file or files under \Config\ path
